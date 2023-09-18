@@ -1,8 +1,8 @@
 const Database = require('better-sqlite3');
 
-const db = new Database('/database/bundeli/posts.db');
-const dbimage = new Database('/database/bundeli/images.db');
-const dbkissan = new Database('/database/bundeli/kissan.db');
+const db = new Database('../database/bundeli/posts.db');
+const dbimage = new Database('../database/bundeli/images.db');
+const dbkissan = new Database('../database/bundeli/kissan.db');
 
 db.exec(`
   CREATE TABLE IF NOT EXISTS posts (
