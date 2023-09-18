@@ -199,7 +199,9 @@ app.post('/create', upload.array('images', 5), async (req, res) => {
 app.get('/delete/:id', (req, res) => {
   const postId = req.params.id;
   db.prepare('DELETE FROM posts WHERE id = ?').run(postId);
-  res.redirect('/');
+  dbimage.prepare('DELETE FROM posts WHERE id = ?').run(postId);
+
+  
 });
 
 // app.get('/add', (req, res) => {
