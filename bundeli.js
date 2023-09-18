@@ -308,6 +308,6 @@ app.get('/', async (req, res) => {
   // res.render('query', { chats: chats  , name:name[0].name , phonenumber:number} );
 });
 
-app.listen(3000, () => {
-  console.log('Server is running on http://localhost:3000');
+app.listen(7777, () => {
+  console.log('Server is running on http://localhost:7777');
 });
