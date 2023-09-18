@@ -62,11 +62,7 @@
       btn.classList.add('disabled');
       btn.disabled = true; // This actually disables the button
       document.getElementById('spinner').classList.remove('visually-hidden')
-      // Assuming the button is within a form, you can submit the form after disabling the button
-      const form = btn.closest('form');
-      if (form) {
-        form.submit();
-      }
+     
     }
     </script>
 
