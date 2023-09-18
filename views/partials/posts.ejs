@@ -1,0 +1,17 @@
+<% posts.forEach(post => { %>
+    <li class="list-group-item">
+
+        <% images.forEach(img => { %>
+
+
+          <% if (img.id === post.id) { %>
+
+          <img src="data:image/webpg;base64,<%= img.images.toString('base64') %>" alt="Image" class="img-fluid">
+          <% } %>
+          <% }); %>
+          
+
+     
+      <p><%= post.chat%></p>
+    </li>
+  <% }); %>

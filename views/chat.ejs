@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <%- include('./partials/header.ejs') %>
+
+</head>
+<body>
+  <div class="container mt-2">
+
+    <!-- <ul class="list-group" id="post-list" hx-poll="true" hx-get="/allposts" hx-trigger="every 1s">
+      <% posts.forEach(post => { %>
+        <li class="list-group-item">
+  
+          
+          <% images.forEach(img => { %>
+            <% if (img.id === post.id) { %>
+            <img src="data:image/webpg;base64,<%= img.images.toString('base64') %>" alt="Image" class="img-fluid">
+            <% } %>
+            <% }); %>
+        
+        <p><%= post.content %></p>
+      </li>
+      <% }); %>
+    </ul> -->
+
+    <h2 class="mt-4">Create a New Post</h2>
+    <form method="post" hx-post="/create" hx-trigger="submit" enctype="multipart/form-data">
+      <%- include('partials/postform') %>
+    </form>
+  </div>
+  
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<div class="form-group mb-2 text-center">
+  <div class="p-3 m-2" style="border: 2px gray dashed; background-color: ghostwhite; border-radius: 1rem;" onclick="getimages()">
+    <i class="fa-solid fa-image text-secondary" style="font-size: 3rem;"></i>
+
+    <p>Select Images</p>
+
+  </div>
+  <!-- <label for="image">Upload Image:</label> -->
+  <input type="file" class="form-control-file" style="display: none;" id="images" name="images" multiple>
+  <div class="m-1" id="image-preview"></div>
+</div>
+<div class="form-group mb-2">
+  <label for="query">Query:</label>
+  <textarea class="form-control mb-1" id="textInput" name="content" rows="5"></textarea>
+  <!-- <a class=" btn btn-success" id="speechButton"><i class="fas fa-microphone m-1 " style="font-size: 1.7rem;"></i></a> -->
+
+</div>
+<div class="align-items-center d-flex ">
+  <button class="btn btn-primary me-2" type="submit">Create</button>
+
+
+
+
+  <script>
+    $(document).ready(function() {
+      // Image preview
+      $("#images").change(function() {
+        readURL(this);
+      });
+
+      function readURL(input) {
+        if (input.files && input.files.length > 0) {
+          $("#image-preview").empty();
+          for (var i = 0; i < input.files.length; i++) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+              $("<img>").attr("src", e.target.result).addClass("preview-image m-1").appendTo("#image-preview");
+            }
+            reader.readAsDataURL(input.files[i]);
+          }
+        }
+      }
+    });
+  </script>
+
+
+
+  <script>
+    function getimages() {
+      console.log('click')
+      $("#images").click()
+    }
+  </script>
+
+
+
+
+  <style>
+    .preview-image {
+      max-width: 200px;
+      margin-right: 10px;
+    }
+  </style>

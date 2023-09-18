@@ -1,0 +1,35 @@
+<!-- admin.ejs -->
+<html>
+  <head>
+    <script src="https://unpkg.com/htmx.org@1.9.5"></script>
+  </head>
+  <body>
+    <h1>Admin Dashboard</h1>
+    <table>
+      <tr>
+        <th>Title</th>
+        <th>Content</th>
+        <th>Actions</th>
+      </tr>
+      <% posts.forEach(post => { %>
+        <tr>
+          <td><%= post.title %></td>
+          <td><%= post.content %></td>
+          <td>
+            <!-- Use hx-boost to enable HTMX for the entire table row -->
+            <div hx-boost>
+              <a href="/edit/<%= post.id %>" hx-get="/edit/<%= post.id %>" hx-trigger="click">Edit</a>
+              <!-- Use hx-delete with a form for proper DELETE requests -->
+              <form method="POST" action="/delete/<%= post.id %>" hx-delete="auto">
+                <button type="submit" hx-confirm="Are you sure?">Delete</button>
+              </form>
+            </div>
+          </td>
+        </tr>
+      <% }) %>
+    </table>
+
+    <!-- Use hx-boost for the "Add" button as well -->
+    <button id="add-post-button" hx-get="/add" hx-trigger="click" hx-boost>Add</button>
+  </body>
+</html>
