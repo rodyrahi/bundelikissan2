@@ -201,7 +201,7 @@ app.get('/delete/:id', (req, res) => {
   db.prepare('DELETE FROM posts WHERE id = ?').run(postId);
   dbimage.prepare('DELETE FROM images WHERE id = ?').run(postId);
 
-  
+  res.redirect('/');
 });
 
 // app.get('/add', (req, res) => {
