@@ -25,8 +25,10 @@
   </div>
 </div>
 
-
-<progress id='progress' class="visually-hidden" value='0' max='100'></progress>
+<div class="progress my-2 visually-hidden" id="progressout">
+  <div id='progress' class="progress-bar progress-bar-striped " role="progressbar" style="width: 10%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+<!-- <progress  class="progress-bar progress-bar-striped visually-hidden" value='0'  max='100'></progress> -->
 
   <script>
     $(document).ready(function() {
@@ -79,7 +81,8 @@
 
   <script>
     htmx.on('#form', 'htmx:xhr:progress', function(evt) {
-      htmx.find('#progress').classList.remove('visually-hidden')
-      htmx.find('#progress').setAttribute('value', evt.detail.loaded/evt.detail.total * 100)
+      htmx.find('#progressout').classList.remove('visually-hidden')
+      
+      htmx.find('#progress').setAttribute('aria-valuenow', evt.detail.loaded/evt.detail.total * 100)
     });
 </script>
