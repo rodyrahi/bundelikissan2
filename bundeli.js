@@ -130,9 +130,9 @@ app.post('/create', upload.array('images', 5), async (req, res) => {
         ],
       });
 
-      if (compressedImageBuffer.length > 100000) {
-        throw new Error('Image size exceeds 100KB');
-      }
+      // if (compressedImageBuffer.length > 100000) {
+      //   throw new Error('Image size exceeds 100KB');
+      // }
 
       return compressedImageBuffer;
     })
