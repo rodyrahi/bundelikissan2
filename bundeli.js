@@ -303,17 +303,7 @@ app.post("/sendcode", async (req, res) => {
 });
 
 
-app.get('/', async (req, res) => {
-  // const number =  req.session.phoneNumber;
 
-  // const chats = db.prepare('SELECT * FROM posts').all();
-
-  // const name = dbkissan.prepare(
-  //   `SELECT name FROM kissan WHERE number='${'+91'+number}'`
-  // ).all();
-  // console.log(name);
-  // res.render('query', { chats: chats  , name:name[0].name , phonenumber:number} );
-});
 
 app.listen(7777, () => {
   console.log('Server is running on http://localhost:7777');

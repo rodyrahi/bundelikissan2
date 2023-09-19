@@ -82,8 +82,8 @@
                             </div>
                             <p class="text-break"><%= element.chat %></p>
                             <hr>
-                            <a class="btn btn-dark" hx-indicator="#spinner"  hx-target="#query" hx-get="/delete/<%= element.id %>">Delete</a>
-                            <div class="spinner-border text-primary htmx-indicator " role="status" id="spinner" style="width: 25px; height: 25px;">
+                            <a class="btn btn-dark" hx-indicator="#spinner<%= index %>"  hx-target="#query" hx-get="/delete/<%= element.id %>">Delete</a>
+                            <div class="spinner-border text-primary htmx-indicator " role="status" id="spinner<%= index %>" style="width: 25px; height: 25px;">
                                 <span class=""></span>
                               </div>
 
