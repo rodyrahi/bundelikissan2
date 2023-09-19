@@ -303,6 +303,16 @@ app.post("/sendcode", async (req, res) => {
 });
 
 
+app.get('/notification', (req, res) => {
+
+    const number = req.session.phoneNumber
+    const chats = db.prepare(`SELECT * FROM posts WHERE number='${'+91'+number}'`).all();
+  
+    res.render('notification', { phonenumber: number , chats:chats})
+ 
+});
+
+
 
 
 app.listen(7777, () => {

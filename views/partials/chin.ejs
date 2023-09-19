@@ -1,29 +1,39 @@
-<div class=" shadow  text-center justify-content-center w-100 d-flex pt-2 " style=" position: fixed ;
+<div class=" shadow  text-center justify-content-center w-100 d-flex py-1 " style=" position: fixed ;
       bottom: 0rem; background-color: rgb(255, 255, 255); left: 0px; border-top: 1px  rgb(212, 212, 212)  solid; color:#297138">
-      <div class="m-auto">
+      <div class="m-auto position-relative" >
             <i class="fa-solid fa-house "></i>
             <br>
-            <p class="m-0" id="home" style="font-size: 0.8rem;">Home</p>
+            <p class="m-0 " id="home" style="font-size: 0.8rem;">Home</p>
+            <a href="/" class="stretched-link"></a>
       </div>
 
-      <div class="m-auto">
+      <div class="m-auto position-relative">
             <i class="fa-solid fa-bell"></i>
             <br>
-            <p class="m-0" id="notification" style="font-size: 0.8rem;">Home</p>
+            <p class="m-0 " id="notification" style="font-size: 0.8rem;">Notification</p>
+            <a  hx-get="/notification" hx-target="#home" class="stretched-link"></a>
+
 
       </div>
-      <div class="m-auto">
+      <div class="m-auto position-relative">
             <i class="fa-solid fa-video"></i>
             <br>
-            <p class="m-0" id="video" style="font-size: 0.8rem;">Home</p>
+            <p class="m-0 " id="video" style="font-size: 0.8rem;">Video</p>
+            <a href="/video" class="stretched-link"></a>
+
 
       </div>
-      <div class="m-auto">
+      <div class="m-auto position-relative">
             <i class="fa-solid fa-right-from-bracket "></i>
             <br>
-            <p class="m-0" id="logout" style="font-size: 0.8rem;">Home</p>
+            <p class="m-0 " id="logout" style="font-size: 0.8rem;">Logout</p>
+            <a href="/logout" class="stretched-link"></a>
+
 
       </div>
 
             
 </div>
+<script>
+
+</script>

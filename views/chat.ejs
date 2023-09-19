@@ -5,8 +5,8 @@
   <%- include('./partials/header.ejs') %>
 
 </head>
-<body>
-  <div class="container mt-2" style="margin-bottom: 7rem;">
+<body style="font-family: 'Rubik', sans-serif;   background-image: url('/uploads/pattern3.png'); background-color: white; background-repeat: repeat; background-size: contain;">
+  <div class="container mt-2" id="home" style="margin-bottom: 7rem;">
 
     <!-- <ul class="list-group" id="post-list" hx-poll="true" hx-get="/allposts" hx-trigger="every 1s">
       <% posts.forEach(post => { %>
@@ -29,7 +29,8 @@
       <%- include('partials/postform') %>
     </form>
   </div>
-  
+  <%- include('./partials/chin.ejs') %>
+
 
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
