@@ -135,6 +135,7 @@ app.post('/create', upload.array('images', 5), async (req, res) => {
   db.prepare('INSERT INTO posts (chat, number) VALUES (?,?)').run(content , number);
   const post = db.prepare(`SELECT * FROM posts WHERE chat='${content}'`).all();
 
+  console.log('done till here');
 
 
   for (const imageBuffer of images) {
