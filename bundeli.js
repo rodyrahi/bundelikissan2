@@ -119,7 +119,7 @@ app.post('/create', upload.array('images', 5), async (req, res) => {
     for (const file of req.files) {
       const compressedImageBuffer = await sharp(file.buffer)
         .resize({ width: 800 })
-        .jpeg({ quality: 40 })
+        .webp({ quality: 40 })
         .toBuffer();
 
       if (compressedImageBuffer.length > 100000) {
@@ -198,12 +198,11 @@ app.post('/create', upload.array('images', 5), async (req, res) => {
 
 app.get('/delete/:id', (req, res) => {
   const postId = req.params.id;
-  db.transaction(() => {
+ 
     db.prepare('DELETE FROM posts WHERE id = ?').run(postId);
-  });
-  dbimage.transaction(() => {
+
     dbimage.prepare('DELETE FROM images WHERE id = ?').run(postId);
-  });
+
 
 
   res.redirect('/');
