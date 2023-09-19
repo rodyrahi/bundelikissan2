@@ -119,7 +119,7 @@ app.post('/create', upload.array('images', 5), async (req, res) => {
     for (const file of req.files) {
       const compressedImageBuffer = await sharp(file.buffer)
         .resize({ width: 800 })
-        .jpeg({ quality: 60 })
+        .jpeg({ quality: 40 })
         .toBuffer();
 
       if (compressedImageBuffer.length > 100000) {
