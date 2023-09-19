@@ -102,7 +102,7 @@ app.get('/chat', (req, res) => {
   const images = dbimage.prepare('SELECT * FROM images ').all();
   const post = db.prepare(`SELECT * FROM posts WHERE number='${number}' AND status='unsolved'`).all();
 
-  res.render('chat', { posts , images , noti:post.length>0?'1':'0' });
+  res.render('chat', { posts , images , noti:post.length>0 && post[0].reply?'1':'0' });
 });
 
 app.get('/allposts', (req, res) => {
