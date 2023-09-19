@@ -2,6 +2,8 @@ const express = require('express');
 const path = require('path');
 const multer = require('multer');
 const sharp = require('sharp');
+const imagemin = require('imagemin');
+const imageminSharp = require('imagemin-sharp');
 const {db , dbimage , dbkissan} = require('./db');
 const session = require("express-session");
 const FileStore = require('session-file-store')(session);
@@ -117,18 +119,24 @@ app.post('/create', upload.array('images', 5), async (req, res) => {
 
   // const imagePromises = [];
 
-  const images = await Promise.map(req.files || [], async (file) => {
-    const compressedImageBuffer = await sharp(file.buffer)
-      .resize({ width: 800 })
-      .webp({ quality: 40 })
-      .toBuffer();
+  const images = await Promise.all(
+    (req.files || []).map(async (file) => {
+      const compressedImageBuffer = await imagemin.buffer(file.buffer, {
+        plugins: [
+          imageminSharp({
+            resize: { width: 800 },
+            webp: { quality: 40 },
+          }),
+        ],
+      });
 
-    if (compressedImageBuffer.length > 100000) {
-      throw new Error('Image size exceeds 100KB');
-    }
+      if (compressedImageBuffer.length > 100000) {
+        throw new Error('Image size exceeds 100KB');
+      }
 
-    return compressedImageBuffer;
-  }, { concurrency: 4 }); 
+      return compressedImageBuffer;
+    })
+  );
 
   // const images = await Promise.all(imagePromises);
   
