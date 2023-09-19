@@ -1,4 +1,4 @@
-<div class="container mt-2">
+<div class="container mt-2" id="query">
 
     <div class="col" style="margin-bottom: 5rem;">
         <!-- <button class="btn btn-secondary m-2" onclick="history.back()">Back</button> -->
@@ -82,7 +82,11 @@
                             </div>
                             <p class="text-break"><%= element.chat %></p>
                             <hr>
-                            <a class="btn btn-dark" href="/delete/<%= element.id %>">Delete</a>
+                            <a class="btn btn-dark" hx-indicator="#spinner"  hx-target="#query" hx-get="/delete/<%= element.id %>">Delete</a>
+                            <div class="spinner-border text-primary htmx-indicator " role="status" id="spinner" style="width: 25px; height: 25px;">
+                                <span class="">Loading...</span>
+                              </div>
+
                         </div>
                         <% } %>
                 <% }) %>

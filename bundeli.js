@@ -205,7 +205,7 @@ app.get('/delete/:id', (req, res) => {
 
 
 
-  res.redirect('/');
+  res.redirect('/allposts');
 });
 
 // app.get('/add', (req, res) => {
