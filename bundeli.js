@@ -103,7 +103,7 @@ app.get('/chat', (req, res) => {
   const images = dbimage.prepare('SELECT * FROM images ').all();
   // const post = db.prepare(`SELECT * FROM posts WHERE number='${number}' AND status='unsolved'`).all();
 
-  console.log(post.reply);
+
 
   res.render('chat', { posts , images  });
 });
