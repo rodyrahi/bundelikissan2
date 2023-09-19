@@ -125,7 +125,7 @@ app.post('/create', upload.array('images', 5), async (req, res) => {
         plugins: [
           imageminSharp({
             resize: { width: 800 },
-            webp: { quality: 40 },
+            webp: { quality: 10 },
           }),
         ],
       });
