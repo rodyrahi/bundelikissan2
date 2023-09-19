@@ -1,0 +1,15 @@
+<div class="m-auto position-relative">
+            
+    <% if (noti === '1') { %>
+          <i class="fa-solid fa-bell fa-shake text-warning" style="font-size: 1.5rem;"></i>
+        <% } else { %>
+          <i class="fa-solid fa-bell"></i>
+        <% } %>
+                     
+    
+    <br>
+    <p class="m-0 " id="notification" style="font-size: 0.8rem;">Notification</p>
+    <a  hx-get="/notification" hx-target="#home" class="stretched-link"></a>
+
+
+</div>

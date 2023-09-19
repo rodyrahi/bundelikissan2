@@ -42,7 +42,7 @@ app.get('/', async (req, res) => {
 app.get('/home', async(req, res) => {
   const number = req.session.phoneNumber
   const user = dbkissan.prepare(`SELECT * FROM kissan WHERE number='${number}'`).all();
-  const post = db.prepare(`SELECT * FROM posts WHERE number='${number}' AND status='unsolved'`).all();
+  // const post = db.prepare(`SELECT * FROM posts WHERE number='${number}' AND status='unsolved'`).all();
 
   
   
@@ -52,7 +52,7 @@ app.get('/home', async(req, res) => {
       'https://api.openweathermap.org/data/2.5/weather?id=1273587&appid=404ae0fc6125b1b2ac81edc980993a31'
     );
     
-    user.length>0 ?res.render('home' , { weather: response.data, phonenumber:number , noti:post.length>0?'1':'0' }):res.redirect('/');
+    user.length>0 ?res.render('home' , { weather: response.data, phonenumber:number  }):res.redirect('/');
   } catch (error) {
     console.log('Error:', error);
     res.sendStatus(500); // Send an error response to the client
@@ -65,6 +65,7 @@ app.get('/query', async(req, res) => {
   const number = req.session.phoneNumber
   const user = dbkissan.prepare(`SELECT * FROM kissan WHERE number='${number}'`).all();
 
+  // const post = db.prepare(`SELECT * FROM posts WHERE number='${number}' AND status='unsolved'`).all();
 
   try {
     const response = await axios.get(
@@ -100,9 +101,11 @@ app.get('/chat', (req, res) => {
 
   const posts = db.prepare('SELECT * FROM posts ORDER BY timestamp DESC').all();
   const images = dbimage.prepare('SELECT * FROM images ').all();
-  const post = db.prepare(`SELECT * FROM posts WHERE number='${number}' AND status='unsolved'`).all();
+  // const post = db.prepare(`SELECT * FROM posts WHERE number='${number}' AND status='unsolved'`).all();
 
-  res.render('chat', { posts , images , noti:post.length>0 && post[0].reply?'1':'0' });
+  console.log(post.reply);
+
+  res.render('chat', { posts , images  });
 });
 
 app.get('/allposts', (req, res) => {
@@ -332,6 +335,16 @@ app.get('/viewnoti/:id', (req, res) => {
 
 });
 
+app.get('/getnoti', (req, res) => {
+
+  const number = req.session.phoneNumber
+  // const chats = db.prepare(`SELECT * FROM posts WHERE number='${number}'`).all();
+  // const images = dbimage.prepare(`SELECT * FROM images WHERE number='${number}'`).all()
+  const post = db.prepare(`SELECT * FROM posts WHERE number='${number}' AND status='unsolved'`).all();
+
+  res.render('bell', {noti:post.length>0 && post[0].reply ? '1' : '0'})
+
+});
 
 
 

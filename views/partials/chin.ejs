@@ -7,13 +7,11 @@
             <a href="/" class="stretched-link"></a>
       </div>
 
-      <div class="m-auto position-relative">
+      <div class="m-auto position-relative" hx-get="/getnoti" hx-trigger="every 1s">
             
-            <% if (noti === '1') { %>
-                  <i class="fa-solid fa-bell fa-shake text-warning" style="font-size: 1.5rem;"></i>
-                <% } else { %>
+
                   <i class="fa-solid fa-bell"></i>
-                <% } %>
+              
                              
             
             <br>
