@@ -7,6 +7,7 @@ const session = require("express-session");
 const FileStore = require('session-file-store')(session);
 const fetch = require('node-fetch');
 const axios = require('axios');
+const Promise = require('bluebird'); // Install via npm
 const app = express();
 
 app.use(express.json());
@@ -105,50 +106,7 @@ app.get('/allposts', (req, res) => {
   res.render('query', { chats:posts , images});
 });
 
-const imagePromises = [];
 
-app.post('/compress', upload.array('images', 5), async (req, res) => {
-
-  console.log('post');
-  // const number =  req.session.phoneNumber;
-
-  // const { content } = req.body;
-  // if (!content) {
-  //   return res.status(400).send('Content is required');
-  // }
-
- 
-
-  if (req.files && req.files.length > 0) {
-    for (const file of req.files) {
-      const compressedImageBuffer = await sharp(file.buffer)
-        .resize({ width: 800 })
-        .webp({ quality: 40 })
-        .toBuffer();
-
-      if (compressedImageBuffer.length > 100000) {
-        return res.status(400).send('Image size exceeds 100KB');
-      }
-
-      imagePromises.push(compressedImageBuffer);
-    }
-  }
-
-  // const images = await Promise.all(imagePromises);
-  
-  // db.prepare('INSERT INTO posts (chat, number) VALUES (?,?)').run(content , number);
-  // const post = db.prepare(`SELECT * FROM posts WHERE chat='${content}'`).all();
-
-  // console.log('done till here');
-
-
-  // for (const imageBuffer of images) {
-  //   dbimage.prepare('INSERT INTO images (id,images , number) VALUES (?,? , ?)').run( post[0].id, imageBuffer ,number);
-
-  // }
-
-  // res.render('partials/postform')
-});
 app.post('/create', upload.array('images', 5), async (req, res) => {
   const number =  req.session.phoneNumber;
 
@@ -159,22 +117,20 @@ app.post('/create', upload.array('images', 5), async (req, res) => {
 
   // const imagePromises = [];
 
-  // if (req.files && req.files.length > 0) {
-  //   for (const file of req.files) {
-  //     const compressedImageBuffer = await sharp(file.buffer)
-  //       .resize({ width: 800 })
-  //       .webp({ quality: 40 })
-  //       .toBuffer();
+  const images = await Promise.map(req.files || [], async (file) => {
+    const compressedImageBuffer = await sharp(file.buffer)
+      .resize({ width: 800 })
+      .webp({ quality: 40 })
+      .toBuffer();
 
-  //     if (compressedImageBuffer.length > 100000) {
-  //       return res.status(400).send('Image size exceeds 100KB');
-  //     }
+    if (compressedImageBuffer.length > 100000) {
+      throw new Error('Image size exceeds 100KB');
+    }
 
-  //     imagePromises.push(compressedImageBuffer);
-  //   }
-  // }
+    return compressedImageBuffer;
+  }, { concurrency: 4 }); 
 
-  const images = await Promise.all(imagePromises);
+  // const images = await Promise.all(imagePromises);
   
   db.prepare('INSERT INTO posts (chat, number) VALUES (?,?)').run(content , number);
   const post = db.prepare(`SELECT * FROM posts WHERE chat='${content}'`).all();
