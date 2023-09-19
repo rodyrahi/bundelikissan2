@@ -1,100 +1,132 @@
 <div class="container mt-2" id="query">
 
-    <div class="col" style="margin-bottom: 5rem;">
-        <!-- <button class="btn btn-secondary m-2" onclick="history.back()">Back</button> -->
+  <div class="col" style="margin-bottom: 5rem;">
+    <!-- <button class="btn btn-secondary m-2" onclick="history.back()">Back</button> -->
 
-        <nav>
-            <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
-                <button class="nav-link active btn-dark  btn-sm bg-light border me-1" id="nav-unsolved-tab" data-bs-toggle="tab" data-bs-target="#nav-unsolved" type="button" role="tab" aria-controls="nav-unsolved" aria-selected="true" >Unsolved</button>
-                <button class="nav-link btn-dark bg-light btn-sm border me-1" id="nav-solved-tab" data-bs-toggle="tab" data-bs-target="#nav-solved" type="button" role="tab" aria-controls="nav-solved" aria-selected="false">Solved</button>
-                <button class="nav-link btn-dark bg-light btn-sm border me-1 " id="nav-myquery-tab" data-bs-toggle="tab" data-bs-target="#nav-myquery" type="button" role="tab" aria-controls="nav-myquery" aria-selected="false">My Query</button>
-            </div>
-        </nav>
+    <nav>
+      <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+        <!-- <button class="nav-link active btn-dark  btn-sm bg-light border me-1" id="nav-unsolved-tab" data-bs-toggle="tab" data-bs-target="#nav-unsolved" type="button" role="tab" aria-controls="nav-unsolved" aria-selected="true" >Unsolved</button> -->
+        <button class="nav-link btn-dark bg-light btn-sm border me-1" id="nav-solved-tab" data-bs-toggle="tab" data-bs-target="#nav-solved" type="button" role="tab" aria-controls="nav-solved" aria-selected="true">Solved</button>
+        <button class="nav-link btn-dark bg-light btn-sm border me-1 " id="nav-myquery-tab" data-bs-toggle="tab" data-bs-target="#nav-myquery" type="button" role="tab" aria-controls="nav-myquery" aria-selected="false">My Query</button>
+      </div>
+    </nav>
 
-        <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane fade show active" id="nav-unsolved" role="tabpanel" aria-labelledby="nav-unsolved-tab">
-                <% chats.forEach((element, index) => { %>
-                    <% if (element.status === 'unsolved'&& images.length > 0 ) { %>
-                        <div class="p-1 m-1 mb-2 shadow border bg-light" style=" border-radius: 0.5rem;">
-                            <h4 class="m-1 mb-2"><%= element.name %></h4>
-                            <p class="m-1 mb-2 text-wrap text-break"><%= element.chat %></p>
-                           
-                                <div class="collapse" id="collapse<%= index %>">
-                                    
-                                    <% images.forEach(image => { %>
-                                        <% if (image.id === element.id ) { %>
-                                            <img style="object-fit: scale-down; width: 100%; max-width: 300px;" src="data:image/webpg;base64,<%= image.images.toString('base64') %>" alt="Image">
+    <div class="tab-content" id="nav-tabContent">
+      <div class="tab-pane fade " id="nav-unsolved" role="tabpanel" aria-labelledby="nav-unsolved-tab">
+        <% chats.forEach((element, index) => { %>
+        <% if (element.status === 'unsolved'&& images.length > 0 ) { %>
+        <div class="p-1 m-1 mb-2 shadow border bg-light" style=" border-radius: 0.5rem;">
+          <h4 class="m-1 mb-2"><%= element.name %></h4>
+          <p class="m-1 mb-2 text-wrap text-break"><%= element.chat %></p>
 
-                                        <% } %>
-                                    <% }) %>
-                                </div>
-                                <a class="btn btn-primary btn-sm mb-2 m-1" style="font-size: 0.7rem;" data-bs-toggle="collapse" href="#collapse<%= index %>" role="button" aria-expanded="false" aria-controls="collapse<%= index %>">
-                                    <i class="fa-solid fa-eye"></i> View Image
-                                </a>
-                            
-                        </div>
-                    <% } %>
-                <% }) %>
-            </div>
+          <div class="collapse" id="collapse<%= index %>">
 
-            <div class="tab-pane fade" id="nav-solved" role="tabpanel" aria-labelledby="nav-solved-tab">
-                <% chats.forEach((element, index) => { %>
-                    <% if (element.status === 'solved') { %>
-                        <div class="p-1 m-1 mb-2 shadow bg-white border" style="border-radius: 0.5rem;">
-                            <h4 class="m-1 mb-2"><%= element.name %></h4>
-                            <p class="m-1 mb-2 text-wrap text-break"><%= element.chat %></p>
+            <% images.forEach(image => { %>
+            <% if (image.id === element.id ) { %>
+            <img style="object-fit: scale-down; width: 100%; max-width: 300px;" src="data:image/webpg;base64,<%= image.images.toString('base64') %>" alt="Image">
 
-                            <div class="collapse" id="collapse<%= index %>">
-                                <% images.forEach(image => { %>
+            <% } %>
+            <% }) %>
+          </div>
+          <a class="btn btn-primary btn-sm mb-2 m-1" style="font-size: 0.7rem;" data-bs-toggle="collapse" href="#collapse<%= index %>" role="button" aria-expanded="false" aria-controls="collapse<%= index %>">
+            <i class="fa-solid fa-eye"></i> View Image
+          </a>
 
-                                    <% if (image.id === element.id ) { %>
-                                        <img style="object-fit: scale-down; width: 100%; max-width: 300px;" src="data:image/webpg;base64,<%= image.images.toString('base64') %>" alt="Image">
-
-                                    <% } %>                                <% }) %>
-                                <div class="p-2 my-2 bg-light" style="border-radius: 0.4rem;">
-                                    <p class="text-break"><%= element.reply %></p>
-                                </div>
-                            </div>
-                            <a class="btn btn-primary btn-sm mb-2 m-1" style="font-size: 0.7rem;" data-bs-toggle="collapse" href="#collapse<%= index %>" role="button" aria-expanded="false" aria-controls="collapse<%= index %>">
-                                Read More..
-                            </a>
-                        </div>
-                    <% } %>
-                <% }) %>
-            </div>
-
-            <div class="tab-pane fade" id="nav-myquery" role="tabpanel" aria-labelledby="nav-myquery-tab">
-                <% chats.forEach((element, index) => { %>
-                   <% if (images.length > 0) { %>
-                    
-              
-                        <div class="p-2 border rounded mb-2 bg-white" style="">
-                            <a class="btn btn-primary btn-sm mb-2 " style="font-size: 0.7rem;" data-bs-toggle="collapse" href="#collapse<%= index %>" role="button" aria-expanded="false" aria-controls="collapse<%= index %>">
-                                <i class="fa-solid fa-eye"></i> View Image
-                            </a>
-                            <div class="collapse" id="collapse<%= index %>">
-                                <% images.forEach(image => { %>
-                                    <% if (image.id === element.id ) { %>
-                                        <img style="object-fit: scale-down; width: 100%; max-width: 300px;" src="data:image/webpg;base64,<%= image.images.toString('base64') %>" alt="Image">
-
-                                    <% } %>
-                                   <% }) %>
-                            </div>
-                            <p class="text-break"><%= element.chat %></p>
-                            <hr>
-                            <a class="btn btn-dark" hx-indicator="#spinner<%= index %>"  hx-target="#query" hx-get="/delete/<%= element.id %>">Delete</a>
-                            <div class="spinner-border text-primary htmx-indicator " role="status" id="spinner<%= index %>" style="width: 25px; height: 25px;">
-                                <span class=""></span>
-                              </div>
-
-                        </div>
-                        <% } %>
-                <% }) %>
-            </div>
         </div>
+        <% } %>
+        <% }) %>
+      </div>
 
+      <div class="tab-pane fade show active" id="nav-solved" role="tabpanel" aria-labelledby="nav-solved-tab">
+        <% chats.forEach((element, index) => { %>
+        <% if (element.status === 'solved') { %>
+        <div class="p-1 m-1 mb-2 shadow bg-white border" style="border-radius: 0.5rem;">
+          <h4 class="m-1 mb-2"><%= element.name %></h4>
+          <p class="m-1 mb-2 text-wrap text-break"><%= element.chat %></p>
+
+
+          <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+
+                <% let firstImage = true; %>
+                <% images.forEach(image => { %>
+                  <% if (image.id === element.id ) { %>
+                    <div class="carousel-item <%= firstImage ? 'active' : '' %>">
+                      <img style="object-fit: scale-down; width: 100%; max-width: 300px;" src="data:image/webpg;base64,<%= image.images.toString('base64') %>" alt="Image">
+                    </div>
+                    <% firstImage = false; %>
+                  <% } %>
+                <% }) %>
+
+
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+
+
+
+
+          <div class="p-2 my-2 bg-light" style="border-radius: 0.4rem;">
+            <p class="text-break"><%= element.reply %></p>
+          </div>
+
+
+        </div>
+        <% } %>
+        <% }) %>
+      </div>
+
+      <div class="tab-pane fade" id="nav-myquery" role="tabpanel" aria-labelledby="nav-myquery-tab">
+        <% chats.forEach((element, index) => { %>
+        <% if (images.length > 0) { %>
+
+
+        <div class="p-2 border rounded mb-2 bg-white" style="">
+
+         
+          <div id="carouselExampleControls<%= index %>" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+
+                <% let firstImage = true; %>
+                <% images.forEach(image => { %>
+                  <% if (image.id === element.id ) { %>
+                    <div class="carousel-item <%= firstImage ? 'active' : '' %>">
+                      <img style="object-fit: scale-down; width: 100%; max-width: 300px;" src="data:image/webpg;base64,<%= image.images.toString('base64') %>" alt="Image">
+                    </div>
+                    <% firstImage = false; %>
+                  <% } %>
+                <% }) %>
+
+
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls<%= index %>" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls<%= index %>" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+          <p class="text-break"><%= element.chat %></p>
+          <hr>
+          <a class="btn btn-dark btn-sm rounded-circle" hx-indicator="#spinner<%= index %>" hx-target="#query" hx-get="/delete/<%= element.id %>"><i class="fa-solid fa-trash-can"></i></a>
+          <div class="spinner-border text-primary htmx-indicator " role="status" id="spinner<%= index %>" style="width: 25px; height: 25px;">
+            <span class=""></span>
+          </div>
+
+        </div>
+        <% } %>
+        <% }) %>
+      </div>
     </div>
+
+  </div>
 </div>
-
-
-
