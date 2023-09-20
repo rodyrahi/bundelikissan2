@@ -375,6 +375,20 @@ app.post("/expertlogin", async (req, res) => {
 });
 
 
+app.get('/admin', (req, res) => {
+
+  const experts = dbexpert.prepare(`SELECT * FROM experts`).all()
+  res.render('admin' , {experts});
+});
+
+app.post('/createxpert', async (req, res) => {
+  const {name , password} = req.body
+  dbexpert.prepare(`INSERT INTO experts (user , pass) VALUES (? , ?)`).run(name,password)
+  res.redirect('/admin')
+});
+
+
+
 
 
 app.listen(7777, () => {
