@@ -52,7 +52,7 @@
         
           <hr>
 
-          <form action="/expertreply" method="post">
+          <form hx-post="/expertreply" method="post" hx-swap="outerHTML">
 
             <p class="text-muted m-0" >ADD A ANSWER</p> 
             <div class="mb-3">
@@ -89,10 +89,31 @@
 
           <div class="collapse" id="collapse<%= index  %>">
 
-          <% const images = element.image.replace(/["\[\]]/g, '').split(','); %>
-          <% images.forEach(image => { %>
-          <img style="object-fit: scale-down; width: 100%; max-width: 300px;" src="/uploads/<%= image.trim() %>" alt="<%= image.trim() %>">
-          <% }) %>
+            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+              <div class="carousel-inner">
+  
+                  <% let firstImage = true; %>
+                  <% images.forEach(image => { %>
+                    <% if (image.id === element.id ) { %>
+                      <div class="carousel-item <%= firstImage ? 'active' : '' %>">
+                        <img style="object-fit: scale-down; width: 100%; max-width: 300px;" src="data:image/webpg;base64,<%= image.images.toString('base64') %>" alt="Image">
+                      </div>
+                      <% firstImage = false; %>
+                    <% } %>
+                  <% }) %>
+  
+  
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+  
         
 
           <div class="p-2 my-2" style="background-color: darkcyan;

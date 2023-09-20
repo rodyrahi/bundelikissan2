@@ -387,7 +387,23 @@ app.post('/createxpert', async (req, res) => {
   res.redirect('/admin')
 });
 
+app.post('/expertreply', async (req, res) => {
 
+  const {reply , number} = req.body
+
+  db.prepare('UPDATE posts SET reply=? WHERE number=?').run(reply , number)
+  // dbexpert.prepare(`UPDATE chats SET reply='${reply}', status='solved' WHERE number='${number}'`).run();
+
+
+
+
+    res.redirect('/expertlogin');
+
+
+
+
+
+});
 
 
 
