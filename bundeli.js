@@ -328,10 +328,10 @@ app.get('/viewnoti/:id', (req, res) => {
   const postId = req.params.id;
 
   const number = req.session.phoneNumber
-  const chats = db.prepare(`SELECT * FROM posts WHERE number='${number}'`).all();
-  const images = dbimage.prepare(`SELECT * FROM images WHERE number='${number}'`).all()
+  // const chats = db.prepare(`SELECT * FROM posts WHERE number='${number}'`).all();
+  // const images = dbimage.prepare(`SELECT * FROM images WHERE number='${number}'`).all()
   db.prepare(`UPDATE posts SET status='solved' WHERE id='${postId}'`).run();
-  res.redirect('/query')
+  res.redirect('/allposts')
 
 });
 
