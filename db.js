@@ -3,6 +3,8 @@ const Database = require('better-sqlite3');
 const db = new Database('../database/bundeli/posts.db');
 const dbimage = new Database('../database/bundeli/images.db');
 const dbkissan = new Database('../database/bundeli/kissan.db');
+const dbexpert = new Database('../database/bundeli/expert.db');
+
 
 db.exec(`
   CREATE TABLE IF NOT EXISTS posts (
@@ -40,6 +42,14 @@ dbimage.exec(`
   )
 `);
 
+dbexpert.exec(`
+  CREATE TABLE IF NOT EXISTS experts (
+    user TEXT,
+    pass TEXT
+    
+  )
+`);
+
 console.log('Connected to the database');
 
-module.exports = {db , dbimage , dbkissan};
+module.exports = {db , dbimage , dbkissan , dbexpert};

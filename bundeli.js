@@ -3,7 +3,7 @@ const path = require('path');
 const multer = require('multer');
 const sharp = require('sharp');
 
-const {db , dbimage , dbkissan} = require('./db');
+const {db , dbimage , dbkissan, dbexpert} = require('./db');
 const session = require("express-session");
 const FileStore = require('session-file-store')(session);
 const fetch = require('node-fetch');
@@ -345,6 +345,35 @@ app.get('/getnoti', (req, res) => {
   res.render('bell', {noti:post.length>0 && post[0].reply ? '1' : '0'})
 
 });
+
+
+app.get('/expert', (req, res) => {
+
+
+  res.render('logins/expertlogin');
+});
+
+app.post("/expertlogin", async (req, res) => {
+  const { name, password } = req.body;
+
+  const number = req.session.phoneNumber
+
+  const chats = db.prepare(`SELECT * FROM posts`).all();
+
+  const images = dbimage.prepare(`SELECT * FROM images`).all()
+
+  const expert = dbexpert.prepare(
+    `SELECT * FROM experts WHERE user='${name}' AND pass='${password}'`
+  ).all();
+
+
+  if (expert.length > 0) {
+    res.render('expert',{chats , images});
+  } else {
+    res.redirect("/expert");
+  }
+});
+
 
 
 
