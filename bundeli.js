@@ -394,7 +394,7 @@ app.post('/expertreply', async (req, res) => {
   db.prepare('UPDATE posts SET reply=? WHERE number=? AND id=?').run(reply , number , id)
   // dbexpert.prepare(`UPDATE chats SET reply='${reply}', status='solved' WHERE number='${number}'`).run();
 
-    res.redirect('/expert');
+
 
 });
 
