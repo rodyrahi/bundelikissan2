@@ -14,7 +14,7 @@
                 <div class="border p-1 rounded " >
                     <p class="m-0">Your Question Has Been Answered </p>
                 
-            <a class="btn btn-success btn-sm" href="/viewnoti/<%= element.id %>" >View Notification</a> 
+            <a class="btn btn-success btn-sm"  hx-get="/viewnoti/<%= element.id %>" >View Notification</a> 
             <% } %>
 
             <% }) %>
