@@ -389,9 +389,9 @@ app.post('/createxpert', async (req, res) => {
 
 app.post('/expertreply', async (req, res) => {
 
-  const {reply , number} = req.body
+  const {reply , number ,id} = req.body
 
-  db.prepare('UPDATE posts SET reply=? WHERE number=?').run(reply , number)
+  db.prepare('UPDATE posts SET reply=? WHERE number=? AND id=?').run(reply , number , id)
   // dbexpert.prepare(`UPDATE chats SET reply='${reply}', status='solved' WHERE number='${number}'`).run();
 
 
