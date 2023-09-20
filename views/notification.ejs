@@ -1,7 +1,7 @@
  
  
  
- <div class="container ">
+ <div class="container " id="noti">
 
     <div class="col bg-white border p-1 mt-3">
 
@@ -14,7 +14,7 @@
                 <div class="border p-1 rounded " >
                     <p class="m-0">Your Question Has Been Answered </p>
                 
-            <a class="btn btn-success btn-sm"  hx-get="/viewnoti/<%= element.id %>" >View Notification</a> 
+            <a class="btn btn-success btn-sm"  hx-get="/viewnoti/<%= element.id %>" hx-swap="outerHTML" hx-target="noti" >View Notification</a> 
             <% } %>
 
             <% }) %>
