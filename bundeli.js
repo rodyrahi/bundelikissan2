@@ -34,8 +34,10 @@ app.use(session({
 
 /////////////////////////////////////////
 const expertRouter = require("./routes/expert.js");
+const notificationRouter = require("./routes/notification.js");
 
 app.use("/", expertRouter);
+app.use("/", notificationRouter);
 
 ////////////////////////////////////////
 
@@ -49,13 +51,21 @@ app.get('/', async (req, res) => {
 
 });
 
+app.post('/', (req, res) => {
+
+  const { code, phonenumber } = req.body;
+  const user = dbkissan.prepare(`SELECT * FROM kissan WHERE number='${phonenumber}'`).all();
+
+  code === randomCode?
+    user.length > 0 ? res.redirect("/") : res.render("profile/createprofile")
+  :res.render("logins/kissanlogin" , {number:phonenumber});
+  
+});
+
 app.get('/home', async(req, res) => {
   const number = req.session.phoneNumber
   const user = dbkissan.prepare(`SELECT * FROM kissan WHERE number='${number}'`).all();
   // const post = db.prepare(`SELECT * FROM posts WHERE number='${number}' AND status='unsolved'`).all();
-
-  
-  
 
   try {
     const response = await axios.get(
@@ -69,7 +79,6 @@ app.get('/home', async(req, res) => {
   }
 
 });
-
 
 app.get('/query', async(req, res) => {
   const number = req.session.phoneNumber
@@ -89,21 +98,6 @@ app.get('/query', async(req, res) => {
   }
 
 });
-
-
-app.post('/', (req, res) => {
-
-  const { code, phonenumber } = req.body;
-  const user = dbkissan.prepare(`SELECT * FROM kissan WHERE number='${phonenumber}'`).all();
-
-  code === randomCode?
-    user.length > 0 ? res.redirect("/") : res.render("profile/createprofile")
-  :res.render("logins/kissanlogin" , {number:phonenumber});
-  
-});
-
-
-
 
 app.get('/chat', (req, res) => {
   const number =  req.session.phoneNumber;
@@ -166,56 +160,6 @@ app.post('/create', upload.array('images', 5), async (req, res) => {
   res.render('partials/postform')
 });
 
-// app.get('/admin', (req, res) => {
-//   const posts = db.prepare('SELECT * FROM posts').all();
-//   res.render('admin', { posts });
-// });
-
-// app.get('/edit/:id', (req, res) => {
-//   const postId = req.params.id;
-//   const post = db.prepare('SELECT * FROM posts WHERE id = ?').get(postId);
-
-//   if (!post) {
-//     res.status(404).send('Post not found');
-//   } else {
-//     res.render('edit', { post });
-//   }
-// });
-
-// app.post('/edit/:id', upload.single('image'), async (req, res) => {
-//   const postId = req.params.id;
-//   const { title, content } = req.body;
-//   if (!title || !content) {
-//     return res.status(400).send('Title and content are required');
-//   }
-
-//   let compressedImageBuffer = null;
-
-//   if (req.file) {
-//     try {
-//       compressedImageBuffer = await sharp(req.file.buffer)
-//         .resize({ width: 800 })
-//         .jpeg({ quality: 60 })
-//         .toBuffer();
-
-//       if (compressedImageBuffer.length > 100000) {
-//         return res.status(400).send('Image size exceeds 100KB');
-//       }
-//     } catch (error) {
-//       console.error('Error compressing image:', error);
-//       return res.status(500).send('Image compression failed');
-//     }
-//   }
-
-//   db.prepare('UPDATE posts SET title = ?, content = ?, image = ? WHERE id = ?').run(
-//     title,
-//     content,
-//     compressedImageBuffer,
-//     postId
-//   );
-
-//   res.redirect('/admin');
-// });
 
 app.get('/delete/:id', (req, res) => {
   const postId = req.params.id;
@@ -229,9 +173,7 @@ app.get('/delete/:id', (req, res) => {
   res.redirect('/allposts');
 });
 
-// app.get('/add', (req, res) => {
-//   res.render('add');
-// });
+
 
 app.get('/kissanlogin', (req, res) => {
   res.render('logins/kissanlogin');
@@ -245,9 +187,6 @@ app.post('/createprofile', async (req, res) => {
 
   res.redirect('/');
 });
-
-
-
 
 
 
@@ -323,38 +262,6 @@ app.post("/sendcode", async (req, res) => {
 });
 
 
-app.get('/notification', (req, res) => {
-
-    const number = req.session.phoneNumber
-    const chats = db.prepare(`SELECT * FROM posts WHERE number='${number}'`).all();
-    const images = dbimage.prepare(`SELECT * FROM images WHERE number='${number}'`).all()
-
-    res.render('notification', { chats , images})
- 
-});
-
-app.get('/viewnoti/:id', (req, res) => {
-
-  const postId = req.params.id;
-
-  const number = req.session.phoneNumber
-  // const chats = db.prepare(`SELECT * FROM posts WHERE number='${number}'`).all();
-  // const images = dbimage.prepare(`SELECT * FROM images WHERE number='${number}'`).all()
-  db.prepare(`UPDATE posts SET status='solved' WHERE id='${postId}'`).run();
-  res.redirect('/allposts')
-
-});
-
-app.get('/getnoti', (req, res) => {
-
-  const number = req.session.phoneNumber
-  // const chats = db.prepare(`SELECT * FROM posts WHERE number='${number}'`).all();
-  // const images = dbimage.prepare(`SELECT * FROM images WHERE number='${number}'`).all()
-  const post = db.prepare(`SELECT * FROM posts WHERE number='${number}' AND status='unsolved'`).all();
-
-  res.render('bell', {noti:post.length>0 && post[0].reply ? '1' : '0'})
-
-});
 
 
 
@@ -368,6 +275,11 @@ app.post('/createxpert', async (req, res) => {
   const {name , password} = req.body
   dbexpert.prepare(`INSERT INTO experts (user , pass) VALUES (? , ?)`).run(name,password)
   res.redirect('/admin')
+});
+
+
+app.get('/privacy', (req, res) => {
+  res.render('privacy');
 });
 
 app.listen(7777, () => {
