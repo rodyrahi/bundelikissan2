@@ -356,36 +356,32 @@ app.get('/expert', (req, res) => {
 app.post("/expertlogin", async (req, res) => {
   const { name, password } = req.body;
 
-  const number = req.session.phoneNumber
-
   const chats = db.prepare(`SELECT * FROM posts`).all();
 
   const images = dbimage.prepare(`SELECT * FROM images`).all()
-
   const expert = dbexpert.prepare(
     `SELECT * FROM experts WHERE user='${name}' AND pass='${password}'`
   ).all();
 
 
   if (expert.length > 0) {
-    res.render('expert',{chats , images});
+    res.render("expert" , {chats , images});
   } else {
     res.redirect("/expert");
   }
 });
 
+app.get("/expertdash", async (req, res) => {
 
-app.get('/admin', (req, res) => {
+  const chats = db.prepare(`SELECT * FROM posts`).all();
 
-  const experts = dbexpert.prepare(`SELECT * FROM experts`).all()
-  res.render('admin' , {experts});
+  const images = dbimage.prepare(`SELECT * FROM images`).all()
+
+  res.render('partials/allposts',{chats , images});
+
 });
 
-app.post('/createxpert', async (req, res) => {
-  const {name , password} = req.body
-  dbexpert.prepare(`INSERT INTO experts (user , pass) VALUES (? , ?)`).run(name,password)
-  res.redirect('/admin')
-});
+
 
 app.post('/expertreply', async (req, res) => {
 
@@ -398,7 +394,17 @@ app.post('/expertreply', async (req, res) => {
 
 });
 
+app.get('/admin', (req, res) => {
 
+  const experts = dbexpert.prepare(`SELECT * FROM experts`).all()
+  res.render('admin' , {experts});
+});
+
+app.post('/createxpert', async (req, res) => {
+  const {name , password} = req.body
+  dbexpert.prepare(`INSERT INTO experts (user , pass) VALUES (? , ?)`).run(name,password)
+  res.redirect('/admin')
+});
 
 app.listen(7777, () => {
   console.log('Server is running on http://localhost:7777');
