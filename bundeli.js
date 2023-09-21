@@ -188,6 +188,19 @@ app.post('/createprofile', async (req, res) => {
   res.redirect('/');
 });
 
+app.get('/userprofile', async (req, res) => {
+  const number =  req.session.phoneNumber;
+
+  
+  const result = dbkissan.prepare(
+    `SELECT * FROM kissan WHERE number='${number}'`
+  ).all();
+
+  console.log(result);
+
+  res.render('profile/userprofile', { phonenumber: number, user: result[0] });
+});
+
 
 
 
@@ -276,6 +289,8 @@ app.post('/createxpert', async (req, res) => {
   dbexpert.prepare(`INSERT INTO experts (user , pass) VALUES (? , ?)`).run(name,password)
   res.redirect('/admin')
 });
+
+
 
 
 app.get('/privacy', (req, res) => {
