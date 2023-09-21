@@ -32,6 +32,16 @@ app.use(session({
   saveUninitialized: true
 }));
 
+/////////////////////////////////////////
+const expertRouter = require("./routes/expert.js");
+
+app.use("/", expertRouter);
+
+////////////////////////////////////////
+
+
+
+
 app.get('/', async (req, res) => {
   const number = req.session.phoneNumber
   const user = dbkissan.prepare(`SELECT * FROM kissan WHERE number='${number}'`).all();
@@ -347,52 +357,6 @@ app.get('/getnoti', (req, res) => {
 });
 
 
-app.get('/expert', (req, res) => {
-
-
-  res.render('logins/expertlogin');
-});
-
-app.post("/expertlogin", async (req, res) => {
-  const { name, password } = req.body;
-
-  const chats = db.prepare(`SELECT * FROM posts`).all();
-
-  const images = dbimage.prepare(`SELECT * FROM images`).all()
-  const expert = dbexpert.prepare(
-    `SELECT * FROM experts WHERE user='${name}' AND pass='${password}'`
-  ).all();
-
-
-  if (expert.length > 0) {
-    res.render("expert" , {chats , images});
-  } else {
-    res.redirect("/expert");
-  }
-});
-
-app.get("/expertdash", async (req, res) => {
-
-  const chats = db.prepare(`SELECT * FROM posts`).all();
-
-  const images = dbimage.prepare(`SELECT * FROM images`).all()
-
-  res.render('partials/allposts',{chats , images});
-
-});
-
-
-
-app.post('/expertreply', async (req, res) => {
-
-  const {reply , number ,id} = req.body
-
-  db.prepare('UPDATE posts SET reply=? WHERE number=? AND id=?').run(reply , number , id)
-  // dbexpert.prepare(`UPDATE chats SET reply='${reply}', status='solved' WHERE number='${number}'`).run();
-
-
-
-});
 
 app.get('/admin', (req, res) => {
 

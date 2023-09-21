@@ -1,74 +1,76 @@
 <%- include('./partials/header.ejs') %>
 
-<div class="container" >
-    <button class="btn btn-outline-secondary m-2" onclick="history.back()">Back</button>
-    <nav>
-      <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
-        <button class="nav-link active" id="nav-unsolved-tab" data-bs-toggle="tab" data-bs-target="#nav-unsolved" type="button" role="tab" aria-controls="nav-unsolved" aria-selected="true">Unsolved</button>
-        <button class="nav-link" id="nav-solved-tab" data-bs-toggle="tab" data-bs-target="#nav-solved" type="button" role="tab" aria-controls="nav-solved" aria-selected="false">Solved</button>
-      </div>
-    </nav>
-    <div class="tab-content " id="nav-tabContent">
-      <div class="tab-pane fade active show" hx-get="/expertdash" hx-trigger="every 2s" id="nav-unsolved" role="tabpanel" aria-labelledby="nav-unsolved-tab">
-        
+<div class="container">
+  <!-- <button class="btn btn-outline-secondary m-2" onclick="history.back()">Back</button> -->
+  <nav>
+    <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+      <button class="nav-link active" id="nav-unsolved-tab" data-bs-toggle="tab" data-bs-target="#nav-unsolved" type="button" role="tab" aria-controls="nav-unsolved" aria-selected="true">Unsolved</button>
+      <button class="nav-link" id="nav-solved-tab" data-bs-toggle="tab" data-bs-target="#nav-solved" type="button" role="tab" aria-controls="nav-solved" aria-selected="false">Solved</button>
+    </div>
+  </nav>
+  <div class="tab-content " id="nav-tabContent">
+    <div class="tab-pane fade active show" hx-get="/expertdash" hx-trigger="every 2s" id="nav-unsolved" role="tabpanel" aria-labelledby="nav-unsolved-tab">
 
-      </div>
-      <div class="tab-pane fade" id="nav-solved" role="tabpanel" aria-labelledby="nav-solved-tab">
-        <% chats.forEach((element , index) => { %>
-               
-          <% if (element.status === 'solved') { %>
-            <div class=" p-1 m-1 mb-2 shadow" style="background-color: cornsilk; border: 1px rgb(215, 215, 215) solid;border-radius: 0.5rem;" >
-
-          <h4 class="m-1 mb-2"><%= element.name  %></h4>
-          <p class="m-1 mb-2 text-wrap text-break"><%= element.chat  %></p>
-
-          <div class="collapse" id="collapse<%= index  %>">
-
-            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-              <div class="carousel-inner">
-  
-                  <% let firstImage = true; %>
-                  <% images.forEach(image => { %>
-                    <% if (image.id === element.id ) { %>
-                      <div class="carousel-item <%= firstImage ? 'active' : '' %>">
-                        <img style="object-fit: scale-down; width: 100%; max-width: 300px;" src="data:image/webpg;base64,<%= image.images.toString('base64') %>" alt="Image">
-                      </div>
-                      <% firstImage = false; %>
-                    <% } %>
-                  <% }) %>
-  
-  
-              </div>
-              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-              </button>
-              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-              </button>
-            </div>
-  
-        
-
-          <div class="p-2 my-2" style="background-color: darkcyan;
-          color: white;
-          border-radius: 0.4rem;">
-              <p class="text-break"><%= element.reply  %></p>
-
-          </div>
-            </div>
-            <a class="btn btn-success btn-sm mb-2 m-1" style="font-size: 0.7rem;" data-bs-toggle="collapse" href="#collapse<%= index %>" role="button" aria-expanded="false" aria-controls="collapse<%= index  %>">
-              View Post
-            </a>
-          </div>
-
-
-          <% } %>
-          
-
-          <% }) %>
-      </div>
 
     </div>
+    <div class="tab-pane fade" id="nav-solved" role="tabpanel" aria-labelledby="nav-solved-tab">
+      <% chats.forEach((element , index) => { %>
+
+      <% if (element.status === 'solved') { %>
+      <div class=" p-1 m-1 mb-2 shadow" style="background-color: cornsilk; border: 1px rgb(215, 215, 215) solid;border-radius: 0.5rem;">
+
+        <h4 class="m-1 mb-2"><%= element.name  %></h4>
+        <p class="m-1 mb-2 text-wrap text-break"><%= element.chat  %></p>
+
+
+
+        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+
+            <% let firstImage = true; %>
+            <% images.forEach(image => { %>
+            <% if (image.id === element.id ) { %>
+            <div class="carousel-item <%= firstImage ? 'active' : '' %>">
+              <img style="object-fit: scale-down; width: 100%; max-width: 300px;" src="data:image/webpg;base64,<%= image.images.toString('base64') %>" alt="Image">
+            </div>
+            <% firstImage = false; %>
+            <% } %>
+            <% }) %>
+
+
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+
+
+
+        <div class="p-2 my-2" style="background-color: darkcyan;
+          color: white;
+          border-radius: 0.4rem;">
+          <p class="text-break"><%= element.reply  %></p>
+
+        </div>
+
+
+
+        <!-- <a class="btn btn-success btn-sm mb-2 m-1" style="font-size: 0.7rem;" data-bs-toggle="collapse" href="#collapse<%= index %>" role="button" aria-expanded="false" aria-controls="collapse<%= index  %>">
+          View Post
+        </a> -->
+      </div>
+
+
+      <% } %>
+
+
+      <% }) %>
+    </div>
+
+  </div>
 </div>

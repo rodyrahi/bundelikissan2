@@ -1,5 +1,5 @@
 <% chats.forEach((element,index) => { %>
-<% if (element.status === 'unsolved') { %>
+<% if (!element.reply) { %>
 
 <div class=" p-1 m-1 mb-2 shadow" style="background-color: cornsilk; border: 1px rgb(215, 215, 215) solid;border-radius: 0.5rem;">
 
@@ -8,55 +8,43 @@
 
   <p class="m-1  text-wrap text-break"><%= element.chat  %></p>
 
-  <div class="collapse" id="collapse<%= index  %>">
 
 
-    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-inner">
 
-        <% let firstImage = true; %>
-        <% images.forEach(image => { %>
-        <% if (image.id === element.id ) { %>
-        <div class="carousel-item <%= firstImage ? 'active' : '' %>">
-          <img style="object-fit: scale-down; width: 100%; max-width: 300px;" src="data:image/webpg;base64,<%= image.images.toString('base64') %>" alt="Image">
-        </div>
-        <% firstImage = false; %>
-        <% } %>
-        <% }) %>
+  <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
 
-
+      <% let firstImage = true; %>
+      <% images.forEach(image => { %>
+      <% if (image.id === element.id ) { %>
+      <div class="carousel-item <%= firstImage ? 'active' : '' %>">
+        <img style="object-fit: scale-down; width: 100%; max-width: 300px;" src="data:image/webpg;base64,<%= image.images.toString('base64') %>" alt="Image">
       </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
+      <% firstImage = false; %>
+      <% } %>
+      <% }) %>
+
+
     </div>
-
-
-    <hr>
-
-    <form hx-post="/expertreply" method="post" hx-swap="outerHTML">
-
-      <p class="text-muted m-0">ADD A ANSWER</p>
-      <div class="mb-3">
-        <textarea class="form-control" rows="" cols="" name="reply"></textarea>
-        <input type="tel" value="<%= element.number %>" style="display: none;" name="number">
-        <input type="number" value="<%= element.id %>" style="display: none;" name="id">
-
-      </div>
-      <div class="mb-3">
-        <button class="mx-1 btn btn-primary btn-sm">Reply</button>
-
-      </div>
-    </form>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
   </div>
-  <a class="btn btn-success btn-sm mb-2 m-1" style="font-size: 0.7rem;" data-bs-toggle="collapse" href="#collapse<%= index %>" role="button" aria-expanded="false" aria-controls="collapse<%= index  %>">
-    View Post
-  </a>
+
+
+  <hr>
+
+  <div class="mb-3">
+    <a class="mx-1 btn btn-primary btn-sm"  href="/replypost/<%= element.id%>">Reply</a>
+
+  </div>
+
+
 
 </div>
 
