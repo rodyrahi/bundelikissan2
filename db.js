@@ -4,6 +4,7 @@ const db = new Database('../database/bundeli/posts.db');
 const dbimage = new Database('../database/bundeli/images.db');
 const dbkissan = new Database('../database/bundeli/kissan.db');
 const dbexpert = new Database('../database/bundeli/expert.db');
+const dbadmin = new Database('../database/bundeli/admin.db');
 
 
 db.exec(`
@@ -50,6 +51,16 @@ dbexpert.exec(`
   )
 `);
 
+dbadmin.exec(`
+  CREATE TABLE IF NOT EXISTS adminposts (
+    name TEXT,
+    message TEXT,
+    image BLOB,
+    url TEXT
+    
+  )
+`);
+
 console.log('Connected to the database');
 
-module.exports = {db , dbimage , dbkissan , dbexpert};
+module.exports = {db , dbimage , dbkissan , dbexpert , dbadmin};

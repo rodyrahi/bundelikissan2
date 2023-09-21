@@ -3,7 +3,7 @@ const path = require('path');
 const multer = require('multer');
 const sharp = require('sharp');
 
-const {db , dbimage , dbkissan, dbexpert} = require('./db');
+const {db , dbimage , dbkissan, dbexpert , dbadmin} = require('./db');
 const session = require("express-session");
 const FileStore = require('session-file-store')(session);
 const fetch = require('node-fetch');
@@ -35,9 +35,11 @@ app.use(session({
 /////////////////////////////////////////
 const expertRouter = require("./routes/expert.js");
 const notificationRouter = require("./routes/notification.js");
+const adminRouter = require("./routes/admin.js");
 
 app.use("/", expertRouter);
 app.use("/", notificationRouter);
+app.use("/", adminRouter);
 
 ////////////////////////////////////////
 
@@ -306,6 +308,12 @@ app.get('/privacy', (req, res) => {
   res.render('privacy');
 });
 
+
+app.get('/video', async (req, res) => {
+  const post = dbadmin.prepare(`SELECT * FROM adminposts`).all()
+
+  res.redirect(`${post[0].url}`)
+});
 app.listen(7777, () => {
   console.log('Server is running on http://localhost:7777');
 });
