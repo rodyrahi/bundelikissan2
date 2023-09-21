@@ -290,7 +290,16 @@ app.post('/createxpert', async (req, res) => {
   res.redirect('/admin')
 });
 
+app.post('/updateprofile', async (req, res) => {
+  const number =  req.session.phoneNumber;
+  const { name, fathername, gender, dob, pincode, address } = req.body;
 
+  dbkissan.prepare(
+    `UPDATE kissan SET name=?, fathername=?, gender=?, dob=?, pincode=?, address=? WHERE number=?`
+  ).run(name, fathername, gender, dob, pincode, address, number);
+
+  res.redirect('/home');
+});
 
 
 app.get('/privacy', (req, res) => {
