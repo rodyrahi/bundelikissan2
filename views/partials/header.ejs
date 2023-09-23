@@ -11,4 +11,30 @@
     <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://unpkg.com/htmx.org@1.9.5"></script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          
+            const paragraphs = document.querySelectorAll('p, h1, h2, h3, h4, h5, h6');
+    
+                paragraphs.forEach((el , index) => {
+                const textContent = el.textContent;
+                const apiUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=hi&dt=t&q=${encodeURIComponent(textContent)}`;
+    
+                // Make a fetch request to the API
+                fetch(apiUrl)
+                    .then(response => response.json())
+                    .then(data => {
+                        const translation = data[0][0][0];
+                        el.textContent = translation;
+                    })
+                    .catch((error) => {
+                        console.error('Translation Error:', error);
+                    });
+                });
+                
+            });
+    
+    </script>
     </head>
