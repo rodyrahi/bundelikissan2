@@ -131,3 +131,34 @@
 
   </div>
 </div>
+
+
+<script>
+
+  var lang = `<%= locals.user.lang  %>`
+
+
+if(lang === 'hi'){
+  console.log(lang)
+
+
+  const paragraphs = document.querySelectorAll('p, h1, h2, h3, h4, h5, h6 , label ,button , a');
+
+      paragraphs.forEach((el , index) => {
+      const textContent = el.textContent;
+      const apiUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=hi&dt=t&q=${encodeURIComponent(textContent)}`;
+
+      // Make a fetch request to the API
+      fetch(apiUrl)
+          .then(response => response.json())
+          .then(data => {
+              const translation = data[0][0][0];
+              el.textContent = translation;
+          })
+          .catch((error) => {
+              console.error('Translation Error:', error);
+          });
+      });
+      
+  }
+</script>

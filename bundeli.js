@@ -117,11 +117,12 @@ app.get('/chat', (req, res) => {
 
 app.get('/allposts', (req, res) => {
   const number =  req.session.phoneNumber;
+  const user = dbkissan.prepare(`SELECT * FROM kissan WHERE number='${number}'`).all();
 
   const posts = db.prepare(`SELECT * FROM posts WHERE number='${number}' ORDER BY timestamp DESC` ).all();
   const images = dbimage.prepare(`SELECT * FROM images WHERE number='${number}'`).all()
 
-  res.render('query', { chats:posts , images});
+  res.render('query', { chats:posts , images , user:user[0]});
 });
 
 
