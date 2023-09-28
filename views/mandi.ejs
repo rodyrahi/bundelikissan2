@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./partials/header.ejs') %>
+
+
+<script>
+
+
+
+
+</script>
+
+<body style="font-family: 'Rubik', sans-serif;">
+
+    <div class="container">
+
+       <div class="col mt-3">
+        <button class="btn btn-outline-secondary my-2" onclick="history.back()">Back</button>
+
+        <% posts.forEach((element , index) => { %>
+
+      
+            <div class="p-2 border rounded mb-2" style="background-color: white;">
+
+
+
+                <% if (posts.image) { %>
+                <img src="data:image/webpg;base64,<%= posts.image.toString('base64') %>" alt="Image" class="img-fluid">
+                <% } %>
+           
+ 
+
+            <p class=" text-break"><%= element.messages  %></p>
+          </div>
+        <% }) %>
+       </div>
+    
+    </div>
+
+
+
+
+</body>
+
+
+
+
+
+</html>

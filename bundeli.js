@@ -315,6 +315,15 @@ app.get('/video', async (req, res) => {
 
   res.redirect(`${post[0].url}`)
 });
+
+app.get('/mandi', async (req, res) => {
+  const number =  req.session.phoneNumber
+  const post = dbadmin.prepare(`SELECT * FROM adminposts`).all()
+
+  const user = dbkissan.prepare(`SELECT * FROM kissan WHERE number='${number}'`).all();
+
+  res.render('mandi' ,{ phonenumber: number , posts:post , user:user[0] })
+});
 app.listen(7777, () => {
   console.log('Server is running on http://localhost:7777');
 });
