@@ -11,8 +11,9 @@ router.get('/notification', (req, res) => {
     const number = req.session.phoneNumber
     const chats = db.prepare(`SELECT * FROM posts WHERE number='${number}'`).all();
     const images = dbimage.prepare(`SELECT * FROM images WHERE number='${number}'`).all()
+    const user = dbkissan.prepare(`SELECT * FROM kissan WHERE number='${number}'`).all();
 
-    res.render('notification', { chats , images})
+    res.render('notification', { chats , images , user:user[0]})
  
 });
 
