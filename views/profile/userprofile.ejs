@@ -11,6 +11,14 @@
             <h3>Update Profile</h3>
             <form action="/updateprofile" method="post" >
                 <div class="mb-3">
+                        <label for="languageSelect" class="form-label">Select Language:</label>
+                        <select class="form-select" name="lang" id="languageSelect">
+                            <option value="en">English</option>
+                            <option value="hi">Hindi</option>
+                        </select>
+                </div>
+                
+                <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Full Name</label>
                     <input type="text" class="form-control" name="name" value="<%= user.name %>" id="exampleInputEmail1" aria-describedby="emailHelp">
                     <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
