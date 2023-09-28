@@ -322,7 +322,7 @@ app.get('/mandi', async (req, res) => {
 
   const user = dbkissan.prepare(`SELECT * FROM kissan WHERE number='${number}'`).all();
 
-  res.render('mandi' ,{ phonenumber: number , posts:post , user:user[0] })
+  res.render('mandi' ,{ phonenumber: number , posts:post[0] , user:user[0] })
 });
 app.listen(7777, () => {
   console.log('Server is running on http://localhost:7777');

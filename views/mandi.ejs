@@ -17,7 +17,7 @@
        <div class="col mt-3">
         <button class="btn btn-outline-secondary my-2" onclick="history.back()">Back</button>
 
-        <% posts.forEach((element , index) => { %>
+   
 
       
             <div class="p-2 border rounded mb-2" style="background-color: white;">
@@ -30,9 +30,9 @@
            
  
 
-            <p class=" text-break"><%= element.messages  %></p>
+            <p class=" text-break"><%= posts.message  %></p>
           </div>
-        <% }) %>
+
        </div>
     
     </div>
