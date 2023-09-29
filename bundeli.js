@@ -59,7 +59,7 @@ app.post('/', (req, res) => {
   const user = dbkissan.prepare(`SELECT * FROM kissan WHERE number='${phonenumber}'`).all();
 
   code === randomCode?
-    user.length > 0 ? res.redirect("/") : res.render("profile/createprofile")
+    user.length > 0 ? res.redirect("/") : res.render("profile/createprofile" )
   :res.render("logins/kissanlogin" , {number:phonenumber , user});
   
 });
