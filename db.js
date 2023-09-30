@@ -29,7 +29,8 @@ dbkissan.exec(`
     gender TEXT,
     dob TEXT,
     pincode INTEGER,
-    address TEXT
+    address TEXT,
+    lang TEXT DEFAULT "en"
   )
 `);
 
@@ -53,7 +54,7 @@ dbexpert.exec(`
 
 dbadmin.exec(`
   CREATE TABLE IF NOT EXISTS adminposts (
-    name TEXT,
+    name TEXT DEFAULT "admin",
     message TEXT,
     image BLOB,
     url TEXT

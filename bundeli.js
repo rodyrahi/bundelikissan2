@@ -326,6 +326,47 @@ app.get('/mandi', async (req, res) => {
 
   res.render('mandi' ,{ phonenumber: number , posts:post[0] , user:user[0] })
 });
+
+app.post('/adminpost', upload.array('image'), async (req, res) => {
+  const fileNames = req.files.map(file => file.originalname);
+  const files = req.files;
+
+  const { textInput } = req.body;
+
+
+  // const imagesResult = await executeQuery(
+  //   `SELECT images FROM adminposts WHERE name='admin'`
+  // );
+
+
+  dbadmin.prepare(`DELETE FROM adminposts WHERE name='admin'`).run()
+
+  
+  const images = await Promise.map(req.files || [], async (file) => {
+    const compressedImageBuffer = await sharp(file.buffer)
+      .resize({ width: 800 })
+      .webp({ quality: 40 })
+      .toBuffer();
+
+    if (compressedImageBuffer.length > 100000) {
+      throw new Error('Image size exceeds 100KB');
+    }
+
+    return compressedImageBuffer;
+  }, { concurrency: 4 }); 
+
+
+
+  dbadmin.prepare('INSERT INTO adminposts (name,message,image) VALUES (?,?,?)').run('admin',textInput,images[0]);
+
+  // await executeQuery(
+  //   `INSERT INTO adminposts (message, images) VALUES ('${textInput}', '${fileNames}')`
+  // );
+
+
+  res.redirect('/admin')
+});
+
 app.listen(7777, () => {
   console.log('Server is running on http://localhost:7777');
 });
