@@ -61,12 +61,15 @@
 
 
   <script>
-    function create(btn) {
-      btn.classList.add('disabled');
-    // This actually disables the button
-      document.getElementById('spinner').classList.remove('visually-hidden')
-     
-    }
+function create(btn) {
+  const imageInput = document.getElementById('images');
+
+  // Check if at least one file is selected in the input
+  if (imageInput.files.length > 0) {
+    btn.classList.add('disabled');
+    document.getElementById('spinner').classList.remove('visually-hidden');
+  }
+}
     </script>
 
   <style>
