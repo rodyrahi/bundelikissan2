@@ -39,7 +39,7 @@
 
       <div class="tab-pane fade show active" id="nav-solved" role="tabpanel" aria-labelledby="nav-solved-tab">
         <% chats.forEach((element, index) => { %>
-        <% if (element.status === 'solved') { %>
+        
         <div class="p-1 m-1 mb-2 shadow bg-white border" style="border-radius: 0.5rem;">
           <h4 class="m-1 mb-2"><%= element.name %></h4>
           <p class="m-1 mb-2 text-wrap text-break"><%= element.chat %></p>
@@ -79,7 +79,7 @@
 
 
         </div>
-        <% } %>
+      
         <% }) %>
       </div>
 
