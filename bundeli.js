@@ -266,9 +266,9 @@ app.post("/sendcode", async (req, res) => {
     .then(() => {
       console.log("Message sent successfully");
       const result =db.prepare(`SELECT * FROM posts WHERE number='${phonenumber}'`).all();
-      if (result.length < 1) {
-        db.prepare('INSERT INTO posts (number) VALUES (?)').run(phonenumber);
-      }
+      // if (result.length < 1) {
+      //   db.prepare('INSERT INTO posts (number) VALUES (?)').run(phonenumber);
+      // }
 
     })
     .catch((error) => {
